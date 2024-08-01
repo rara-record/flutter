@@ -1,6 +1,7 @@
 // 앱 실행시 이동되는 곳
 
 import 'package:flutter/material.dart';
+import 'package:intro/widget/appbar.dart';
 import 'package:intro/widget/buttons.dart';
 import 'package:intro/widget/texts.dart';
 
@@ -17,6 +18,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const CommonAppbBar(
+          title: '안녕하세요',
+          isLeading: false,
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
