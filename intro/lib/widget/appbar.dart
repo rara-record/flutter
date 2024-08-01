@@ -20,11 +20,8 @@ class CommonAppbBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      toolbarHeight: 48,
       automaticallyImplyLeading: isLeading, // 뒤로가기 여부
       titleSpacing: isLeading ? 0 : 16,
-      scrolledUnderElevation: 3, // 쓰면 조금 부드러움
-      backgroundColor: Colors.white,
       leading: isLeading
           ? GestureDetector(
               child: const Icon(
@@ -37,16 +34,8 @@ class CommonAppbBar extends StatelessWidget implements PreferredSizeWidget {
                     : Navigator.pop(context);
               })
           : null, // 커스텀 위젯
-      elevation: 1, // 입체감 조정
       actions: actions,
-      title: Text(title,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          )),
-      centerTitle:
-          Theme.of(context).platform == TargetPlatform.iOS ? false : true,
+      title: Text(title),
     );
   }
 }
