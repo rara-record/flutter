@@ -1,6 +1,7 @@
 // 앱 실행시 이동되는 곳
 
 import 'package:flutter/material.dart';
+import 'package:intro/widget/buttons.dart';
 import 'package:intro/widget/texts.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,11 +16,24 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: SectionText(
-          text: '이메일',
-          textColor: Color(0xff979797),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SectionText(
+              text: '이메일',
+              textColor: Color(0xff979797),
+            ),
+            ElevatedButtonCustom(
+              text: '테스트 버튼',
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              onPressed: () {
+                print('hi');
+              },
+            ),
+          ],
         ),
       ),
     );
