@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CommonAppbBar extends StatelessWidget implements PreferredSizeWidget {
+class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool isLeading; // 백버튼 존재 여부
   final Function? onTabBackButton; // 뒤로가기 버튼 액션 정의
   final List<Widget>? actions; // 앱바 우측에 버튼이 필요할 때 정의
 
-  const CommonAppbBar({
+  const CommonAppBar({
     super.key,
     required this.title,
     required this.isLeading,
@@ -15,7 +15,8 @@ class CommonAppbBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   @override
-  Size get preferredSize => throw UnimplementedError();
+  Size get preferredSize =>
+      Size.fromHeight(AppBar().preferredSize.height); // AppBar 높이 설정
 
   @override
   Widget build(BuildContext context) {
