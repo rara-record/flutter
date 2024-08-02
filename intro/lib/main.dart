@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intro/screen/login_screen.dart';
+import 'package:intro/screen/register_screen.dart';
 import 'package:intro/screen/splash_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -46,6 +48,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const SplashScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
       },
     );
   }
