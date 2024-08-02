@@ -13,20 +13,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CommonAppBar(
-        title: '안녕',
+        title: 'Food PICK 가입하기',
         isLeading: true,
       ),
       body: Center(
         child: Column(
           children: [
-            const Text('회원가입 화면'),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('뒤로 이동'),
-            ),
+            GestureDetector(
+                child: _buildProfile(),
+                // 프로필 이미지 변경 및 삭체 팝업 띄우기
+                onTap: () {})
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProfile() {
+    return const Center(
+      child: CircleAvatar(
+        radius: 48,
+        backgroundColor: Colors.grey,
+        child: Icon(
+          Icons.add_a_photo,
+          size: 48,
+          color: Colors.white,
         ),
       ),
     );
