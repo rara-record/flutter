@@ -27,7 +27,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? GestureDetector(
               child: const Icon(
                 Icons.arrow_back,
-                color: Colors.red,
+                color: Colors.black,
               ),
               onTap: () {
                 onTabBackButton != null

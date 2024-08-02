@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           // AppBarTheme 전역 스타일
           centerTitle: !Platform.isIOS,
           toolbarHeight: 48,
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0xFFE7F6F4),
           scrolledUnderElevation: 3, // 쓰면 조금 부드러움
           elevation: 1,
           titleTextStyle: const TextStyle(
