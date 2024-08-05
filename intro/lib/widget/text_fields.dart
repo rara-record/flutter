@@ -13,6 +13,7 @@ class TextFormFieldCustom extends StatefulWidget {
   final TextEditingController controller; // 텍스트 필드 컨트롤러
   final Function(String value)? onFieldSubmitted; // 입력 완료 시 콜백 함수
   final Function()? onTap;
+  final FocusNode? focusNode;
 
   const TextFormFieldCustom({
     this.defaultText,
@@ -26,6 +27,7 @@ class TextFormFieldCustom extends StatefulWidget {
     required this.validator,
     required this.controller,
     this.onFieldSubmitted,
+    this.focusNode,
     this.onTap,
     super.key,
   });
@@ -46,8 +48,9 @@ class _TextFormFieldCustomState extends State<TextFormFieldCustom> {
       enabled: widget.isEnabled,
       readOnly: widget.isReadOnly,
       onTap: widget.isReadOnly ? widget.onTap : null,
-      maxLines: widget.maxLines,
+      maxLines: widget.isPasswordField ? 1 : widget.maxLines,
       onFieldSubmitted: widget.onFieldSubmitted,
+      focusNode: widget.focusNode,
       decoration: InputDecoration(
           // 기본 border
           border: OutlineInputBorder(
