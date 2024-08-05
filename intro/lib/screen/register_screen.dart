@@ -41,6 +41,43 @@ class RegisterScreen extends HookWidget {
       }
     }
 
+    // 다음 스텝으로 이동하는 함수
+    void goToNextStep() {
+      switch (currentStep.value) {
+        case RegisterStep.step1:
+          currentStep.value = RegisterStep.step2;
+          break;
+        case RegisterStep.step2:
+          currentStep.value = RegisterStep.step3;
+          break;
+        case RegisterStep.step3:
+          currentStep.value = RegisterStep.step4;
+          break;
+        case RegisterStep.step4:
+          currentStep.value = RegisterStep.step5;
+          break;
+        case RegisterStep.step5:
+          // 마지막 스텝이므로 가입 절차 완료 처리
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text("가입 완료"),
+              content: const Text("가입 절차가 완료되었습니다."),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    // 필요하다면 추가적인 동작을 수행 (예: 다른 화면으로 이동)
+                  },
+                  child: const Text("확인"),
+                ),
+              ],
+            ),
+          );
+          break;
+      }
+    }
+
     return Scaffold(
         appBar: AppBar(),
         body: Padding(
@@ -69,7 +106,7 @@ class RegisterScreen extends HookWidget {
                 backgroundColor: Colors.black,
                 textColor: Colors.white,
                 onPressed: () {
-                  currentStep.value = RegisterStep.step2;
+                  goToNextStep();
                 },
               ),
             )));
