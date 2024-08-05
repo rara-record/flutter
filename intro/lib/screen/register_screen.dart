@@ -24,6 +24,14 @@ class RegisterScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final currentStep = useState(RegisterStep.step1); // 현재 스텝
+    final userDetails = useState(
+      UserDetails(
+          name: '',
+          birthDate: '',
+          gender: '',
+          nationality: '',
+          phoneNumber: ''),
+    );
 
     // 현재 스텝에 따라 제목 텍스트를 반환하는 함수
     String getSectionText() {
@@ -78,37 +86,121 @@ class RegisterScreen extends HookWidget {
       }
     }
 
+    // 현재 스텝에 맞는 텍스트 필드를 반환하는 함수
+    Widget getTextFieldWidget() {
+      switch (currentStep.value) {
+        case RegisterStep.step1:
+          return TextFormField(
+            initialValue: userDetails.value.name,
+            decoration: const InputDecoration(hintText: '이름을 입력해주세요'),
+            onChanged: (value) {
+              userDetails.value = userDetails.value.copyWith(name: value);
+            },
+          );
+        case RegisterStep.step2:
+          return TextFormField(
+            initialValue: userDetails.value.birthDate,
+            decoration: const InputDecoration(hintText: '생년월일을 입력해주세요'),
+            onChanged: (value) {
+              userDetails.value = userDetails.value.copyWith(birthDate: value);
+            },
+          );
+        case RegisterStep.step3:
+          return TextFormField(
+            initialValue: userDetails.value.gender,
+            decoration: const InputDecoration(hintText: '성별을 입력해주세요'),
+            onChanged: (value) {
+              userDetails.value = userDetails.value.copyWith(gender: value);
+            },
+          );
+        case RegisterStep.step4:
+          return TextFormField(
+            initialValue: userDetails.value.nationality,
+            decoration: const InputDecoration(hintText: '국적을 입력해주세요'),
+            onChanged: (value) {
+              userDetails.value =
+                  userDetails.value.copyWith(nationality: value);
+            },
+          );
+        case RegisterStep.step5:
+          return TextFormField(
+            initialValue: userDetails.value.phoneNumber,
+            decoration: const InputDecoration(hintText: '휴대폰 번호를 입력해주세요'),
+            onChanged: (value) {
+              userDetails.value =
+                  userDetails.value.copyWith(phoneNumber: value);
+            },
+          );
+      }
+    }
+
     return Scaffold(
-        appBar: AppBar(),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // 현재 스텝에 따른 제목 표시
-              Text(getSectionText(),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ))
-            ],
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              // 현재 스텝에 맞는 제목 표시
+              getSectionText(),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            getTextFieldWidget(), // 현재 스텝에 맞는 텍스트 필드 표시
+            const Spacer(),
+          ],
+        ),
+      ),
+      bottomSheet: Container(
+        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.symmetric(vertical: 16),
+        color: Colors.white,
+        child: SizedBox(
+          width: double.infinity,
+          height: 52,
+          child: ElevatedButtonCustom(
+            text: '확인',
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            onPressed: () {
+              goToNextStep();
+            },
           ),
         ),
-        bottomSheet: Container(
-            padding: const EdgeInsets.all(16),
-            margin: const EdgeInsets.symmetric(vertical: 16),
-            color: Colors.white,
-            child: SizedBox(
-              width: double.infinity,
-              height: 52,
-              child: ElevatedButtonCustom(
-                text: '확인',
-                backgroundColor: Colors.black,
-                textColor: Colors.white,
-                onPressed: () {
-                  goToNextStep();
-                },
-              ),
-            )));
+      ),
+    );
+  }
+}
+
+class UserDetails {
+  final String name;
+  final String birthDate;
+  final String gender;
+  final String nationality;
+  final String phoneNumber;
+
+  UserDetails({
+    required this.name,
+    required this.birthDate,
+    required this.gender,
+    required this.nationality,
+    required this.phoneNumber,
+  });
+
+  UserDetails copyWith({
+    String? name,
+    String? birthDate,
+    String? gender,
+    String? nationality,
+    String? phoneNumber,
+  }) {
+    return UserDetails(
+      name: name ?? this.name,
+      birthDate: birthDate ?? this.birthDate,
+      gender: gender ?? this.gender,
+      nationality: nationality ?? this.nationality,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+    );
   }
 }
