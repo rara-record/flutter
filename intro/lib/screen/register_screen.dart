@@ -2,20 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:intro/widget/buttons.dart';
 
-// 이전 스텝의 일부 UI 요소가 그대로 남아있는 상태에서 다음 스텝으로 이동한다.
-// 이전 단계에서 입력된 정보를 계속해서 유지하면서 추가적인 입력을 받는 구조
-
-// 각 스텝마다 UI의 변화를 주면서 동일한 위젯을 업데이트 하고,
-// 사용자가 이전에 입력한 정보는 유지하면서 새로운 정보를 입력할 수 있도록 한다.
-
-// 예를 들어, 텍스트 필드와 설명 텍스트를 하나의 column에 두고, 이들의 내용을 변경해 나가는 방식이다.
-
-// 주요 변경 사항:
-// getSectionText: 현재 스텝에 따라 제목 텍스트를 변경합니다.
-// getTextFieldWidget: 각 스텝에 맞는 텍스트 필드를 반환하며, 이전에 입력된 값을 유지하고 현재 스텝에 맞는 입력을 받습니다.
-// goToNextStep: 다음 스텝으로 이동하며, 마지막 스텝에서 가입 절차를 완료합니다.
-// 이 방식으로 구현하면, 화면 상에서 이전 스텝에서 입력한 내용이 계속 유지되며, 새로운 입력만 추가됩니다. 이미지에서 보여주신 흐름에 따라 섹션 텍스트와 입력 필드가 단계별로 업데이트됩니다.
-
+// 가입 프로세스의 각 단계를 정의합니다.
 enum RegisterStep { step1, step2, step3, step4, step5 }
 
 class RegisterScreen extends HookWidget {
@@ -31,9 +18,9 @@ class RegisterScreen extends HookWidget {
           gender: '',
           nationality: '',
           phoneNumber: ''),
-    );
+    ); // 사용자 입력 데이터
 
-    // 현재 스텝에 따라 제목 텍스트를 반환하는 함수
+    // 현재 스텝에 따라 섹션 제목을 반환하는 함수
     String getSectionText() {
       switch (currentStep.value) {
         case RegisterStep.step1:
@@ -86,76 +73,119 @@ class RegisterScreen extends HookWidget {
       }
     }
 
-    // 현재 스텝에 맞는 텍스트 필드를 반환하는 함수
-    Widget getTextFieldWidget() {
-      switch (currentStep.value) {
-        case RegisterStep.step1:
-          return TextFormField(
-            initialValue: userDetails.value.name,
-            decoration: const InputDecoration(hintText: '이름을 입력해주세요'),
-            onChanged: (value) {
-              userDetails.value = userDetails.value.copyWith(name: value);
-            },
-          );
-        case RegisterStep.step2:
-          return TextFormField(
+    // 각 스텝에 맞는 텍스트 필드를 반환하는 함수 (역순으로 추가)
+    List<Widget> getTextFieldWidgets() {
+      List<Widget> fields = [];
+
+      // Step1: 이름 입력 필드
+      fields.add(
+        TextFormField(
+          initialValue: userDetails.value.name,
+          decoration: const InputDecoration(hintText: '이름을 입력해주세요'),
+          onChanged: (value) {
+            userDetails.value = userDetails.value.copyWith(name: value);
+          },
+        ),
+      );
+
+      // Step2: 생년월일 입력 필드
+      if (currentStep.value.index >= RegisterStep.step2.index) {
+        fields.insert(
+          0,
+          TextFormField(
             initialValue: userDetails.value.birthDate,
             decoration: const InputDecoration(hintText: '생년월일을 입력해주세요'),
             onChanged: (value) {
               userDetails.value = userDetails.value.copyWith(birthDate: value);
             },
-          );
-        case RegisterStep.step3:
-          return TextFormField(
-            initialValue: userDetails.value.gender,
-            decoration: const InputDecoration(hintText: '성별을 입력해주세요'),
-            onChanged: (value) {
-              userDetails.value = userDetails.value.copyWith(gender: value);
-            },
-          );
-        case RegisterStep.step4:
-          return TextFormField(
-            initialValue: userDetails.value.nationality,
-            decoration: const InputDecoration(hintText: '국적을 입력해주세요'),
+          ),
+        );
+      }
+
+      // Step3: 성별 선택 필드
+      if (currentStep.value.index >= RegisterStep.step3.index) {
+        fields.insert(
+          0,
+          DropdownButtonFormField<String>(
+            value: userDetails.value.gender.isEmpty
+                ? null
+                : userDetails.value.gender,
+            hint: const Text('성별을 선택해주세요'),
+            items: const [
+              DropdownMenuItem(value: '남성', child: Text('남성')),
+              DropdownMenuItem(value: '여성', child: Text('여성')),
+              DropdownMenuItem(value: '기타', child: Text('기타')),
+            ],
             onChanged: (value) {
               userDetails.value =
-                  userDetails.value.copyWith(nationality: value);
+                  userDetails.value.copyWith(gender: value ?? '');
             },
-          );
-        case RegisterStep.step5:
-          return TextFormField(
+          ),
+        );
+      }
+
+      // Step4: 국적 선택 필드
+      if (currentStep.value.index >= RegisterStep.step4.index) {
+        fields.insert(
+          0,
+          DropdownButtonFormField<String>(
+            value: userDetails.value.nationality.isEmpty
+                ? null
+                : userDetails.value.nationality,
+            hint: const Text('국적을 선택해주세요'),
+            items: const [
+              DropdownMenuItem(value: '한국', child: Text('한국')),
+              DropdownMenuItem(value: '미국', child: Text('미국')),
+              DropdownMenuItem(value: '기타', child: Text('기타')),
+            ],
+            onChanged: (value) {
+              userDetails.value =
+                  userDetails.value.copyWith(nationality: value ?? '');
+            },
+          ),
+        );
+      }
+
+      // Step5: 휴대폰 번호 입력 필드
+      if (currentStep.value.index >= RegisterStep.step5.index) {
+        fields.insert(
+          0,
+          TextFormField(
             initialValue: userDetails.value.phoneNumber,
             decoration: const InputDecoration(hintText: '휴대폰 번호를 입력해주세요'),
             onChanged: (value) {
               userDetails.value =
                   userDetails.value.copyWith(phoneNumber: value);
             },
-          );
+          ),
+        );
       }
+
+      return fields;
     }
 
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              // 현재 스텝에 맞는 제목 표시
-              getSectionText(),
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            getTextFieldWidget(), // 현재 스텝에 맞는 텍스트 필드 표시
-            const Spacer(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                // 현재 스텝에 맞는 제목 표시
+                getSectionText(),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
+              ...getTextFieldWidgets(), // 이전 스텝에서의 필드도 모두 보여줌
+            ],
+          ),
         ),
       ),
-      bottomSheet: Container(
-        padding: const EdgeInsets.all(16),
-        margin: const EdgeInsets.symmetric(vertical: 16),
-        color: Colors.white,
+      bottomSheet: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: SizedBox(
           width: double.infinity,
           height: 52,
@@ -164,7 +194,7 @@ class RegisterScreen extends HookWidget {
             backgroundColor: Colors.black,
             textColor: Colors.white,
             onPressed: () {
-              goToNextStep();
+              goToNextStep(); // "확인" 버튼을 누르면 다음 스텝으로 이동
             },
           ),
         ),
@@ -188,6 +218,7 @@ class UserDetails {
     required this.phoneNumber,
   });
 
+  // 필드들을 유지하면서 새로운 값을 업데이트하는 copyWith 메서드
   UserDetails copyWith({
     String? name,
     String? birthDate,
