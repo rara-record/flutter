@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intro/screen/login_screen.dart';
-import 'package:intro/screen/register_screen.dart';
+import 'package:intro/features/authentication/screens/register_screen.dart';
 import 'package:intro/screen/splash_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -34,7 +34,8 @@ class MyApp extends StatelessWidget {
           // AppBarTheme 전역 스타일
           centerTitle: !Platform.isIOS,
           toolbarHeight: 48,
-          backgroundColor: const Color(0xFFE7F6F4),
+          // backgroundColor: const Color(0xFFE7F6F4),
+          backgroundColor: Colors.white,
           scrolledUnderElevation: 3, // 쓰면 조금 부드러움
           elevation: 1,
           titleTextStyle: const TextStyle(
