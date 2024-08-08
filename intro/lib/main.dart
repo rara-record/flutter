@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intro/pages/person_page.dart';
+import 'package:intro/widgets/custom_button.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'main.g.dart';
-
-// 값을 저장할 "provider"를 생성합니다(여기서는 "Hello world").
-// provider를 사용하면 노출된 값을 모의(mock)//재정의(override)할 수 있습니다.
-@riverpod
-String helloWorld(HelloWorldRef ref) {
-  return 'Hello world';
-}
 
 Future<void> main() async {
   // main 메소드에서 비동기로 데이터를 다루는 상황이 있을 때 반드시 최초에 호출해줘야 함
@@ -32,13 +27,34 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String value = ref.watch(helloWorldProvider);
-
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Example')),
-        body: Center(
-          child: Text(value),
+      title: 'Dart Data Class Generator',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(20),
+          children: const [
+            CustomButton(
+              title: 'Person',
+              child: PersonPage(),
+            )
+          ],
         ),
       ),
     );
