@@ -1,10 +1,16 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:intro/screen/login_screen.dart';
-import 'package:intro/features/authentication/screens/register_screen.dart';
-import 'package:intro/screen/splash_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+part 'main.g.dart';
+
+// 값을 저장할 "provider"를 생성합니다(여기서는 "Hello world").
+// provider를 사용하면 노출된 값을 모의(mock)//재정의(override)할 수 있습니다.
+@riverpod
+String helloWorld(HelloWorldRef ref) {
+  return 'Hello world';
+}
 
 Future<void> main() async {
   // main 메소드에서 비동기로 데이터를 다루는 상황이 있을 때 반드시 최초에 호출해줘야 함
@@ -17,41 +23,24 @@ Future<void> main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZucGV1Y25lanp3c2JjY3phb2hyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI0ODg1NTgsImV4cCI6MjAzODA2NDU1OH0.R0Cb8hYmpAwLzeB-F43qpfdTPaNZSTRlD_VxNVmPxHs',
   );
 
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+// Riverpod에 의해 노출되는 StatelessWidget 대신 ConsumerWidget을 확장합니다.
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
-  @override // 부모 클래스의 메서드를 덮어쓴다
-  Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final String value = ref.watch(helloWorldProvider);
+
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
-        appBarTheme: AppBarTheme(
-          // AppBarTheme 전역 스타일
-          centerTitle: !Platform.isIOS,
-          toolbarHeight: 48,
-          // backgroundColor: const Color(0xFFE7F6F4),
-          backgroundColor: Colors.white,
-          scrolledUnderElevation: 3, // 쓰면 조금 부드러움
-          elevation: 1,
-          titleTextStyle: const TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Example')),
+        body: Center(
+          child: Text(value),
         ),
       ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const SplashScreen(),
-        '/login': (context) => const LoginScreen(),
-        '/register': (context) => const RegisterScreen(),
-      },
     );
   }
 }
