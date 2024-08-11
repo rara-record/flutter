@@ -24,7 +24,7 @@ mixin _$Hotel {
   int get classification => throw _privateConstructorUsedError;
   String get city => throw _privateConstructorUsedError;
   @JsonKey(name: 'parking_lot_capacity')
-  int? get parkingLotcapacity => throw _privateConstructorUsedError;
+  int? get parkingLotCapacity => throw _privateConstructorUsedError;
   List<Review> get reviews => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $HotelCopyWith<$Res> {
       {String name,
       int classification,
       String city,
-      @JsonKey(name: 'parking_lot_capacity') int? parkingLotcapacity,
+      @JsonKey(name: 'parking_lot_capacity') int? parkingLotCapacity,
       List<Review> reviews});
 }
 
@@ -61,7 +61,7 @@ class _$HotelCopyWithImpl<$Res, $Val extends Hotel>
     Object? name = null,
     Object? classification = null,
     Object? city = null,
-    Object? parkingLotcapacity = freezed,
+    Object? parkingLotCapacity = freezed,
     Object? reviews = null,
   }) {
     return _then(_value.copyWith(
@@ -77,9 +77,9 @@ class _$HotelCopyWithImpl<$Res, $Val extends Hotel>
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String,
-      parkingLotcapacity: freezed == parkingLotcapacity
-          ? _value.parkingLotcapacity
-          : parkingLotcapacity // ignore: cast_nullable_to_non_nullable
+      parkingLotCapacity: freezed == parkingLotCapacity
+          ? _value.parkingLotCapacity
+          : parkingLotCapacity // ignore: cast_nullable_to_non_nullable
               as int?,
       reviews: null == reviews
           ? _value.reviews
@@ -100,7 +100,7 @@ abstract class _$$HotelImplCopyWith<$Res> implements $HotelCopyWith<$Res> {
       {String name,
       int classification,
       String city,
-      @JsonKey(name: 'parking_lot_capacity') int? parkingLotcapacity,
+      @JsonKey(name: 'parking_lot_capacity') int? parkingLotCapacity,
       List<Review> reviews});
 }
 
@@ -118,7 +118,7 @@ class __$$HotelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? classification = null,
     Object? city = null,
-    Object? parkingLotcapacity = freezed,
+    Object? parkingLotCapacity = freezed,
     Object? reviews = null,
   }) {
     return _then(_$HotelImpl(
@@ -134,9 +134,9 @@ class __$$HotelImplCopyWithImpl<$Res>
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String,
-      parkingLotcapacity: freezed == parkingLotcapacity
-          ? _value.parkingLotcapacity
-          : parkingLotcapacity // ignore: cast_nullable_to_non_nullable
+      parkingLotCapacity: freezed == parkingLotCapacity
+          ? _value.parkingLotCapacity
+          : parkingLotCapacity // ignore: cast_nullable_to_non_nullable
               as int?,
       reviews: null == reviews
           ? _value._reviews
@@ -154,7 +154,7 @@ class _$HotelImpl with DiagnosticableTreeMixin implements _Hotel {
       {required this.name,
       required this.classification,
       required this.city,
-      @JsonKey(name: 'parking_lot_capacity') this.parkingLotcapacity,
+      @JsonKey(name: 'parking_lot_capacity') this.parkingLotCapacity,
       final List<Review> reviews = const []})
       : _reviews = reviews;
 
@@ -169,7 +169,7 @@ class _$HotelImpl with DiagnosticableTreeMixin implements _Hotel {
   final String city;
   @override
   @JsonKey(name: 'parking_lot_capacity')
-  final int? parkingLotcapacity;
+  final int? parkingLotCapacity;
   final List<Review> _reviews;
   @override
   @JsonKey()
@@ -181,7 +181,7 @@ class _$HotelImpl with DiagnosticableTreeMixin implements _Hotel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Hotel(name: $name, classification: $classification, city: $city, parkingLotcapacity: $parkingLotcapacity, reviews: $reviews)';
+    return 'Hotel(name: $name, classification: $classification, city: $city, parkingLotCapacity: $parkingLotCapacity, reviews: $reviews)';
   }
 
   @override
@@ -192,7 +192,7 @@ class _$HotelImpl with DiagnosticableTreeMixin implements _Hotel {
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('classification', classification))
       ..add(DiagnosticsProperty('city', city))
-      ..add(DiagnosticsProperty('parkingLotcapacity', parkingLotcapacity))
+      ..add(DiagnosticsProperty('parkingLotCapacity', parkingLotCapacity))
       ..add(DiagnosticsProperty('reviews', reviews));
   }
 
@@ -205,15 +205,15 @@ class _$HotelImpl with DiagnosticableTreeMixin implements _Hotel {
             (identical(other.classification, classification) ||
                 other.classification == classification) &&
             (identical(other.city, city) || other.city == city) &&
-            (identical(other.parkingLotcapacity, parkingLotcapacity) ||
-                other.parkingLotcapacity == parkingLotcapacity) &&
+            (identical(other.parkingLotCapacity, parkingLotCapacity) ||
+                other.parkingLotCapacity == parkingLotCapacity) &&
             const DeepCollectionEquality().equals(other._reviews, _reviews));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name, classification, city,
-      parkingLotcapacity, const DeepCollectionEquality().hash(_reviews));
+      parkingLotCapacity, const DeepCollectionEquality().hash(_reviews));
 
   @JsonKey(ignore: true)
   @override
@@ -234,7 +234,7 @@ abstract class _Hotel implements Hotel {
       {required final String name,
       required final int classification,
       required final String city,
-      @JsonKey(name: 'parking_lot_capacity') final int? parkingLotcapacity,
+      @JsonKey(name: 'parking_lot_capacity') final int? parkingLotCapacity,
       final List<Review> reviews}) = _$HotelImpl;
 
   factory _Hotel.fromJson(Map<String, dynamic> json) = _$HotelImpl.fromJson;
@@ -247,7 +247,7 @@ abstract class _Hotel implements Hotel {
   String get city;
   @override
   @JsonKey(name: 'parking_lot_capacity')
-  int? get parkingLotcapacity;
+  int? get parkingLotCapacity;
   @override
   List<Review> get reviews;
   @override

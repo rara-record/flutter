@@ -11,7 +11,7 @@ class Hotel with _$Hotel {
     required String name,
     required int classification,
     required String city,
-    @JsonKey(name: 'parking_lot_capacity') int? parkingLotcapacity,
+    @JsonKey(name: 'parking_lot_capacity') int? parkingLotCapacity,
     @Default([]) List<Review> reviews,
   }) = _Hotel;
 
